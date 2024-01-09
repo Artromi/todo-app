@@ -12,15 +12,22 @@
     </header>
     <main>
       <form>
-        <label for="all">All</label>
-        <input type="radio" id="all" />
-        <label for="open">Open</label>
-        <input type="radio" id="open" />
-        <label for="done">Done</label>
-        <input type="radio" id="done" />
-        <button>Remove done Todos</button>
-        <input type="text" placeholder="Whats up?" />
-        <button>Add</button>
+        <fieldset>
+          <label for="all">
+            <input type="radio" id="all" name="radio-options" />All
+          </label>
+          <label for="open">
+            <input type="radio" id="open" name="radio-options" />Open</label
+          >
+          <label for="done">
+            <input type="radio" id="done" name="radio-options" />Done</label
+          >
+        </fieldset>
+        <button id="btn-remove">Remove done Todos</button>
+        <div>
+          <input type="text" placeholder="Whats up?" id="add-todo-txt" />
+          <button id="btn-add">Add</button>
+        </div>
       </form>
     </main>
     <script src="script.js"></script>
