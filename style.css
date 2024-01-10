@@ -9,15 +9,16 @@ html {
 body {
   margin: 0;
 }
-main,
-header {
+form,
+h1 {
   margin: 2rem;
 }
-fieldset {
+form {
   display: flex;
   flex-direction: column;
   border: none;
 }
+
 .radio-buttons {
   margin: 0.5rem;
 }

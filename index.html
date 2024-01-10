@@ -7,44 +7,44 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <h1>Todo App</h1>
-    </header>
-    <main>
-      <form>
-        <fieldset>
-          <label for="all">
-            <input
-              type="radio"
-              class="radio-buttons"
-              id="all"
-              name="radio-options"
-            />All
-          </label>
-          <label for="open">
-            <input
-              type="radio"
-              class="radio-buttons"
-              id="open"
-              name="radio-options"
-            />Open</label
-          >
-          <label for="done">
-            <input
-              type="radio"
-              class="radio-buttons"
-              id="done"
-              name="radio-options"
-            />Done</label
-          >
-        </fieldset>
+    <h1>Todo App</h1>
+    <form>
+      <label for="all">
+        <input
+          type="radio"
+          class="radio-buttons"
+          id="all"
+          name="radio-options"
+        />All</label
+      >
+      <label for="open">
+        <input
+          type="radio"
+          class="radio-buttons"
+          id="open"
+          name="radio-options"
+        />Open</label
+      >
+      <label for="done">
+        <input
+          type="radio"
+          class="radio-buttons"
+          id="done"
+          name="radio-options"
+        />Done</label
+      >
+      <div id="button-container">
         <button id="btn-remove">Remove done Todos</button>
-        <div>
+        <div id="add-todo-container">
           <input type="text" placeholder="Whats up?" id="add-todo-txt" />
           <button id="btn-add">Add</button>
         </div>
-      </form>
-    </main>
+      </div>
+      <ul id="todo-list">
+        <li>learn driving a car <input type="checkbox" /></li>
+      </ul>
+    </form>
+
     <script src="script.js"></script>
   </body>
 </html>
