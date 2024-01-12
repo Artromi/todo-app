@@ -6,12 +6,18 @@ const btnAdd = document.getElementById("btn-add");
 const todoInput = document.getElementById("todo-input");
 const todoList = document.getElementById("todo-list");
 // list state
-let todos = [];
-// create and append list element with input(checkbox)
-const newTodo = document.createElement("li");
-todoList.appendChild(newTodo);
-newTodo.textContent = "go for a walk";
-newTodo.setAttribute("id", "todo"); // should uniquely identify the todo
+let todos = {};
+// create and append list element with input(checkbox) & label
+const listItem = document.createElement("li");
+todoList.appendChild(listItem);
+
 const checkbox = document.createElement("input");
-checkbox.setAttribute("type", "checkbox");
-newTodo.appendChild(checkbox);
+checkbox.setAttribute("type", "checkbox"); // unique name and for label ?
+listItem.appendChild(checkbox);
+
+const todoLabel = document.createElement("label");
+todoLabel.setAttribute("for", "checkbox"); // unique name and for label ?
+listItem.appendChild(todoLabel);
+
+todoLabel.textContent = "go for a walk";
+listItem.setAttribute("id", "todo"); // should uniquely identify the todo
