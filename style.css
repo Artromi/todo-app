@@ -26,3 +26,7 @@ button {
   margin-block: 0.5rem;
   padding-inline: 0.5rem;
 }
+
+li {
+  list-style: none;
+}

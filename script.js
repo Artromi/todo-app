@@ -7,10 +7,11 @@ const todoInput = document.getElementById("todo-input");
 const todoList = document.getElementById("todo-list");
 // list state
 let todos = [];
-// create and append list element
+// create and append list element with input(checkbox)
 const newTodo = document.createElement("li");
-newTodo.textContent = "go for a walk";
 todoList.appendChild(newTodo);
+newTodo.textContent = "go for a walk";
+newTodo.setAttribute("id", "todo"); // should uniquely identify the todo
 const checkbox = document.createElement("input");
 checkbox.setAttribute("type", "checkbox");
 newTodo.appendChild(checkbox);
