@@ -4,6 +4,7 @@ const radioDone = document.getElementById("done");
 const btmRemove = document.getElementById("btn-remove");
 const btnAdd = document.getElementById("btn-add");
 const todoInput = document.getElementById("todo-input");
+
 const todoList = document.getElementById("todo-list");
 // list state
 let todos = {};
@@ -21,3 +22,10 @@ listItem.appendChild(todoLabel);
 
 todoLabel.textContent = "go for a walk";
 listItem.setAttribute("id", "todo"); // should uniquely identify the todo
+
+// get the input value
+btnAdd.addEventListener("click", function (event) {
+  event.preventDefault();
+  const todoValue = document.getElementById("todo-input").value;
+  console.log(todoValue);
+});
