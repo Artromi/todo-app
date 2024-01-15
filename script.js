@@ -26,10 +26,12 @@ function createTodo() {
     checkbox.type = "checkbox";
     checkbox.id = item.id;
     checkbox.checked = item.done;
-    // eventlistener for checkbox (update done state)
+    // update done state
     checkbox.addEventListener("change", (event) => {
       const doneState = event.target.checked;
       item.done = doneState;
+      // new local storage state
+      localStorage.setItem("state", JSON.stringify(state));
     });
     // label
     const listLabel = document.createElement("label");
