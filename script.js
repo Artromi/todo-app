@@ -9,7 +9,7 @@ const todoList = document.getElementById("todo-list");
 const state = {
   todos: [
     { description: "Learn driving a car", done: false, id: 1 },
-    { description: "Learn CSS", done: false, id: 2 },
+    { description: "Learn CSS", done: true, id: 2 },
   ],
 };
 createTodo();
@@ -25,7 +25,7 @@ function createTodo() {
     checkbox.checked = item.done;
     // label
     const listLabel = document.createElement("label");
-    listLabel.textContent = item.description;
+    listLabel.textContent = " " + item.description;
     listLabel.setAttribute("for", item.id);
     // append
     listItem.appendChild(checkbox);
