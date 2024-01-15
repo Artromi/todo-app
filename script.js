@@ -26,7 +26,7 @@ function createTodo() {
     checkbox.type = "checkbox";
     checkbox.id = item.id;
     checkbox.checked = item.done;
-    // eventlistener for changind done state
+    // eventlistener for checkbox (update done state)
     checkbox.addEventListener("change", (event) => {
       const doneState = event.target.checked;
       item.done = doneState;
