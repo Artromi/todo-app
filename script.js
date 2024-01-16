@@ -54,7 +54,7 @@ function addTodos(e) {
   const newTodo = {};
   newTodo.description = todoValue;
   newTodo.done = false;
-  newTodo.id = createDateId();
+  newTodo.id = createId();
   state.todos.push(newTodo);
   // save in local storage
   localStorage.setItem("state", JSON.stringify(state));
@@ -64,14 +64,14 @@ function addTodos(e) {
 btnAdd.addEventListener("click", addTodos);
 //
 // create Id
-function createDateId() {
+function createId() {
   let date = Date().split(" ").slice(1, 5).join("-");
   return date;
 }
 
 // In Arbeit ->
 // filter options
-optionAll.addEventListener("change", function (e) {});
+optionAll.addEventListener("change", function () {});
 // remove todos when done: true
 btnRemove.addEventListener("click", function (event) {
   event.preventDefault();
