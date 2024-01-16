@@ -65,14 +65,11 @@ btnAdd.addEventListener("click", addTodos);
 //
 // create Id
 function createDateId() {
-  let date = Date();
-  let arr = date.split(" ");
-  let newArr = arr.slice(1, 5);
-  let id = newArr.join("-");
-  return id;
+  let date = Date().split(" ").slice(1, 5).join("-");
+  return date;
 }
 
-//
+// In Arbeit ->
 // filter options
 optionAll.addEventListener("change", function (e) {});
 // remove todos when done: true
