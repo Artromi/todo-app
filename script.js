@@ -14,14 +14,16 @@ if (localStorage.getItem("state")) {
     todos: [{ description: "Learn CSS", done: false, id: 1 }],
   };
 }
+//
 createTodo();
+//
 // todos aus dem state im HTML erstellen
 function createTodo() {
   todoList.innerHTML = "";
   for (const item of state.todos) {
-    // list item
+    // create list item
     const listItem = document.createElement("li");
-    // input
+    // create input element (checkbox)
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = item.id;
@@ -48,11 +50,11 @@ function createTodo() {
 function addTodos(e) {
   e.preventDefault();
   const todoValue = todoInput.value;
-
+  // create object for state
   const newTodo = {};
   newTodo.description = todoValue;
   newTodo.done = false;
-  newTodo.id = createId(todoValue);
+  newTodo.id = createDateId();
   state.todos.push(newTodo);
   // save in local storage
   localStorage.setItem("state", JSON.stringify(state));
@@ -60,15 +62,24 @@ function addTodos(e) {
   createTodo();
 }
 btnAdd.addEventListener("click", addTodos);
-
-// create Id function
-function createId(input) {
-  return input.replaceAll(" ", "").toLowerCase();
+//
+// create Id
+function createDateId() {
+  let date = Date();
+  let arr = date.split(" ");
+  let newArr = arr.slice(1, 5);
+  let id = newArr.join("-");
+  return id;
 }
-// get the input value
 
-// remove button (just when todo is done!)
+//
+// filter options
+optionAll.addEventListener("change", function (e) {});
+// remove todos when done: true
 btnRemove.addEventListener("click", function (event) {
   event.preventDefault();
-  todoList.innerHTML = "";
+  for (let item of state.todos) {
+    if (item.done === true) {
+    }
+  }
 });
