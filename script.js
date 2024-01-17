@@ -1,82 +1,63 @@
-const optionAll = document.getElementById("all");
-const optionOpen = document.getElementById("open");
-const optionDone = document.getElementById("done");
-const btnRemove = document.getElementById("btn-remove");
 const btnAdd = document.getElementById("btn-add");
-const todoInput = document.getElementById("todo-input");
+const textInput = document.getElementById("todo-input");
+const btnRemove = document.getElementById("btn-remove");
+const optionsAll = document.getElementById("all");
+const optionsDone = document.getElementById("done");
+const optionsOpen = document.getElementById("open");
 const todoList = document.getElementById("todo-list");
+//
 // state
-let state;
-if (localStorage.getItem("state")) {
-  state = JSON.parse(localStorage.getItem("state"));
-} else {
-  state = {
-    todos: [{ description: "Learn CSS", done: false, id: 1 }],
-  };
-}
+let state = {
+  todos: [{ description: "learn HTML", id: "one", done: false }],
+};
+// localStorage.setItem("state", JSON.stringify(state));
 //
-createTodo();
+// call render function
+renderElements();
 //
-// todos aus dem state im HTML erstellen
-function createTodo() {
+// FUNCTIONS //
+// renderElements function
+function renderElements() {
   todoList.innerHTML = "";
-  for (const item of state.todos) {
-    // create list item
+  for (const todo of state.todos) {
+    // create elements
     const listItem = document.createElement("li");
-    // create input element (checkbox)
+    const itemLabel = document.createElement("label");
     const checkbox = document.createElement("input");
+    // attributes for elements
     checkbox.type = "checkbox";
-    checkbox.id = item.id;
-    checkbox.checked = item.done;
-    // update done state
-    checkbox.addEventListener("change", (event) => {
-      const doneState = event.target.checked;
-      item.done = doneState;
-      // new local storage state
-      localStorage.setItem("state", JSON.stringify(state));
-    });
-    // label
-    const listLabel = document.createElement("label");
-    listLabel.textContent = " " + item.description;
-    listLabel.setAttribute("for", item.id);
-    // append
+    checkbox.id = todo.id;
+    checkbox.checked = todo.done;
+    itemLabel.textContent = " " + todo.description;
+    itemLabel.setAttribute("for", todo.id);
+    // append elements
     listItem.appendChild(checkbox);
-    listItem.appendChild(listLabel);
+    listItem.appendChild(itemLabel);
     todoList.appendChild(listItem);
   }
 }
-
-// add todos
-function addTodos(e) {
+//
+// addTodo function
+function addTodo(e) {
   e.preventDefault();
-  const todoValue = todoInput.value;
-  // create object for state
-  const newTodo = {};
-  newTodo.description = todoValue;
-  newTodo.done = false;
-  newTodo.id = createId();
-  state.todos.push(newTodo);
-  // save in local storage
+  const todoValue = textInput.value;
+  const todoObj = {};
+  todoObj.description = todoValue;
+  todoObj.id = createId();
+  todoObj.done = false;
+  state.todos.push(todoObj);
   localStorage.setItem("state", JSON.stringify(state));
 
-  createTodo();
+  renderElements();
 }
-btnAdd.addEventListener("click", addTodos);
 //
-// create Id
+// createID function
 function createId() {
   let date = Date().split(" ").slice(1, 5).join("-");
   return date;
 }
+//
+// EVENT LISTENER //
+btnAdd.addEventListener("click", addTodo);
 
-// In Arbeit ->
-// filter options
-optionAll.addEventListener("change", function () {});
-// remove todos when done: true
-btnRemove.addEventListener("click", function (event) {
-  event.preventDefault();
-  for (let item of state.todos) {
-    if (item.done === true) {
-    }
-  }
-});
+////
