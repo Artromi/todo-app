@@ -24,8 +24,9 @@ function renderElements(currentStatus = state.todos) {
   for (const todo of currentStatus) {
     // create elements
     const listItem = document.createElement("li");
-    const itemLabel = document.createElement("label");
     const checkbox = document.createElement("input");
+    const itemLabel = document.createElement("label");
+
     // attributes for elements
     checkbox.type = "checkbox";
     checkbox.id = todo.id;
