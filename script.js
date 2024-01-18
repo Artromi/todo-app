@@ -35,6 +35,12 @@ function renderElements(currentStatus = state.todos) {
       const doneState = e.target.checked;
       todo.done = doneState;
       localStorage.setItem("state", JSON.stringify(state));
+      if (todo.done === true) {
+        itemLabel.classList.add("checked");
+      }
+      if (todo.done === false) {
+        itemLabel.classList.remove("checked");
+      }
     });
     itemLabel.textContent = " " + todo.description;
     itemLabel.setAttribute("for", todo.id);
@@ -81,7 +87,19 @@ function filterAll() {
 }
 //
 // remove function
-function removeTodos() {}
+function removeTodos(e) {
+  e.preventDefault();
+  const currentState = JSON.parse(localStorage.getItem("state"));
+  const newArray = [];
+  currentState.todos.forEach((todo) => {
+    if (!todo.done) {
+      newArray.push(todo);
+    }
+  });
+  state.todos = newArray;
+  localStorage.setItem("state", JSON.stringify(state));
+  renderElements();
+}
 //
 // EVENT LISTENER //
 btnAdd.addEventListener("click", addTodo);
