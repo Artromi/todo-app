@@ -11,7 +11,7 @@ const todoList = document.getElementById("todo-list");
 const state = localStorage.getItem("state")
   ? JSON.parse(localStorage.getItem("state"))
   : {
-      todos: [{ description: "learn HTML", id: "default", done: false }],
+      todos: [{ description: "learn something", id: "default", done: false }],
     };
 //
 // call render function
