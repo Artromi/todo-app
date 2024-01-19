@@ -35,7 +35,7 @@ function renderElements(currentStatus = state.todos) {
     checkbox.addEventListener("change", function (e) {
       const doneState = e.target.checked;
       todo.done = doneState;
-      localStorage.setItem("state", JSON.stringify(state));
+      updateLocalStorage();
       if (todo.done === true) {
         itemLabel.classList.add("checked");
       }
@@ -60,8 +60,15 @@ function addTodo(e) {
   todoObj.description = todoValue;
   todoObj.id = createId();
   todoObj.done = false;
-  state.todos.push(todoObj);
-  localStorage.setItem("state", JSON.stringify(state));
+  if (
+    state.todos.findIndex(
+      (todo) => todo.description.toLowerCase() === todoValue.toLowerCase()
+    ) === -1
+  ) {
+    state.todos.push(todoObj);
+  }
+
+  updateLocalStorage();
 
   renderElements();
 }
@@ -76,11 +83,13 @@ function createId() {
 function filterDone() {
   const currentState = JSON.parse(localStorage.getItem("state"));
   const doneTodos = currentState.todos.filter((todo) => todo.done === true);
+  updateLocalStorage();
   renderElements(doneTodos);
 }
 function filterOpen() {
   const currentState = JSON.parse(localStorage.getItem("state"));
   const openTodos = currentState.todos.filter((todo) => todo.done === false);
+  updateLocalStorage();
   renderElements(openTodos);
 }
 function filterAll() {
@@ -108,3 +117,8 @@ btnRemove.addEventListener("click", removeTodos);
 optionsDone.addEventListener("change", filterDone);
 optionsOpen.addEventListener("change", filterOpen);
 optionsAll.addEventListener("change", filterAll);
+
+// // Function to update local storage with the current state
+function updateLocalStorage() {
+  localStorage.setItem("state", JSON.stringify(state));
+}
