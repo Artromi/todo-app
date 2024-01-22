@@ -76,17 +76,15 @@ function createId() {
 }
 // filter function
 function filterDone() {
-  const currentState = JSON.parse(localStorage.getItem("state"));
-  const doneTodos = currentState.todos.filter((todo) => todo.done === true);
-  updateLocalStorage();
+  const doneTodos = state.todos.filter((todo) => todo.done === true);
   renderElements(doneTodos);
 }
+
 function filterOpen() {
-  const currentState = JSON.parse(localStorage.getItem("state"));
-  const openTodos = currentState.todos.filter((todo) => todo.done === false);
-  updateLocalStorage();
+  const openTodos = state.todos.filter((todo) => todo.done === false);
   renderElements(openTodos);
 }
+
 function filterAll() {
   renderElements();
 }
