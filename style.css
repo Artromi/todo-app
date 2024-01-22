@@ -43,11 +43,3 @@ li {
   font-size: 1.25rem;
   margin-top: 0.5rem;
 }
-ul > li > label {
-  background: lightgrey;
-  padding-inline: 0.25rem;
-  border-radius: 5px;
-}
-.checked {
-  text-decoration: line-through;
-}

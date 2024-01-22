@@ -5,7 +5,6 @@ const optionsAll = document.getElementById("all");
 const optionsDone = document.getElementById("done");
 const optionsOpen = document.getElementById("open");
 const todoList = document.getElementById("todo-list");
-
 //
 // state
 const state = localStorage.getItem("state")
@@ -18,31 +17,25 @@ const state = localStorage.getItem("state")
 renderElements();
 //
 // FUNCTIONS //
-// renderElements function
-function renderElements(currentStatus = state.todos) {
+// render function
+function renderElements(currentState = state.todos) {
   todoList.innerHTML = "";
-  for (const todo of currentStatus) {
-    // create elements
+  localStorage.setItem("state", JSON.stringify(state));
+  // create elements
+  for (const todo of currentState) {
     const listItem = document.createElement("li");
     const checkbox = document.createElement("input");
     const itemLabel = document.createElement("label");
-
-    // attributes for elements
+    // attributes/value for elements
     checkbox.type = "checkbox";
     checkbox.id = todo.id;
     checkbox.checked = todo.done;
-    // EventListener for changing done state
     checkbox.addEventListener("change", function (e) {
       const doneState = e.target.checked;
       todo.done = doneState;
       updateLocalStorage();
-      if (todo.done === true) {
-        itemLabel.classList.add("checked");
-      }
-      if (todo.done === false) {
-        itemLabel.classList.remove("checked");
-      }
     });
+
     itemLabel.textContent = " " + todo.description;
     itemLabel.setAttribute("for", todo.id);
     // append elements
@@ -51,35 +44,37 @@ function renderElements(currentStatus = state.todos) {
     todoList.appendChild(listItem);
   }
 }
-//
-// addTodo function
+// add todo function
 function addTodo(e) {
   e.preventDefault();
-  const todoValue = textInput.value;
+  let todoValue = textInput.value;
+  if (!todoValue.trim()) {
+    window.alert("add todo pls!");
+    return;
+  }
   const todoObj = {};
   todoObj.description = todoValue;
   todoObj.id = createId();
   todoObj.done = false;
   if (
     state.todos.findIndex(
-      (todo) => todo.description.toLowerCase() === todoValue.toLowerCase()
+      (todo) =>
+        todo.description.toLowerCase().trim() === todoValue.toLowerCase().trim()
     ) === -1
   ) {
     state.todos.push(todoObj);
+  } else {
+    window.alert("todo is already in list!");
   }
-
-  updateLocalStorage();
-
+  textInput.value = "";
   renderElements();
 }
-//
 // createID function
 function createId() {
   let date = Date().split(" ").slice(1, 5).join("-");
   return date;
 }
-//
-// filter options
+// filter function
 function filterDone() {
   const currentState = JSON.parse(localStorage.getItem("state"));
   const doneTodos = currentState.todos.filter((todo) => todo.done === true);
@@ -95,30 +90,28 @@ function filterOpen() {
 function filterAll() {
   renderElements();
 }
-//
+
 // remove function
 function removeTodos(e) {
   e.preventDefault();
   const currentState = JSON.parse(localStorage.getItem("state"));
-  const newArray = [];
+  const newArr = [];
   currentState.todos.forEach((todo) => {
     if (!todo.done) {
-      newArray.push(todo);
+      newArr.push(todo);
     }
   });
-  state.todos = newArray;
-  localStorage.setItem("state", JSON.stringify(state));
+  state.todos = newArr;
+  updateLocalStorage();
   renderElements();
 }
-//
+// Function to update local storage with the current state
+function updateLocalStorage() {
+  localStorage.setItem("state", JSON.stringify(state));
+}
 // EVENT LISTENER //
 btnAdd.addEventListener("click", addTodo);
 btnRemove.addEventListener("click", removeTodos);
 optionsDone.addEventListener("change", filterDone);
 optionsOpen.addEventListener("change", filterOpen);
 optionsAll.addEventListener("change", filterAll);
-
-// // Function to update local storage with the current state
-function updateLocalStorage() {
-  localStorage.setItem("state", JSON.stringify(state));
-}
