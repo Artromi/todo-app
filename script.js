@@ -74,7 +74,7 @@ function createId() {
   let date = Date().split(" ").slice(1, 5).join("-");
   return date;
 }
-// filter function
+// filter functions
 function filterDone() {
   const doneTodos = state.todos.filter((todo) => todo.done === true);
   renderElements(doneTodos);
