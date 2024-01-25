@@ -10,6 +10,7 @@ const todoList = document.getElementById("todo-list");
 const state = localStorage.getItem("state")
   ? JSON.parse(localStorage.getItem("state"))
   : {
+      filter: "all",
       todos: [{ description: "learn something", id: "default", done: false }],
     };
 //
@@ -18,11 +19,18 @@ renderElements();
 //
 // FUNCTIONS //
 // render function
-function renderElements(currentState = state.todos) {
+function renderElements() {
   todoList.innerHTML = "";
-  localStorage.setItem("state", JSON.stringify(state));
+
   // create elements
-  for (const todo of currentState) {
+  for (const todo of state.todos.filter((todo) => {
+    if (state.filter === "done") {
+      return todo.done === true;
+    } else if (state.filter === "open") {
+      return todo.done === false;
+    }
+    return true;
+  })) {
     const listItem = document.createElement("li");
     const checkbox = document.createElement("input");
     const itemLabel = document.createElement("label");
@@ -30,13 +38,16 @@ function renderElements(currentState = state.todos) {
     checkbox.type = "checkbox";
     checkbox.id = todo.id;
     checkbox.checked = todo.done;
+    if (checkbox.checked) {
+      itemLabel.classList.toggle("linethrough");
+    }
     checkbox.addEventListener("change", function (e) {
       const doneState = e.target.checked;
       todo.done = doneState;
-      updateLocalStorage();
+      updateAndRender();
     });
 
-    itemLabel.textContent = " " + todo.description;
+    itemLabel.textContent = todo.description;
     itemLabel.setAttribute("for", todo.id);
     // append elements
     listItem.appendChild(checkbox);
@@ -52,10 +63,11 @@ function addTodo(e) {
     window.alert("add todo pls!");
     return;
   }
-  const todoObj = {};
-  todoObj.description = todoValue;
-  todoObj.id = createId();
-  todoObj.done = false;
+  const todoObj = {
+    description: todoValue,
+    done: false,
+    id: createId(),
+  };
   if (
     state.todos.findIndex(
       (todo) =>
@@ -67,49 +79,47 @@ function addTodo(e) {
     window.alert("todo is already in list!");
   }
   textInput.value = "";
-  renderElements();
+  updateAndRender();
 }
 // createID function
 function createId() {
   let date = Date().split(" ").slice(1, 5).join("-");
   return date;
 }
-// filter functions
-function filterDone() {
-  const doneTodos = state.todos.filter((todo) => todo.done === true);
-  renderElements(doneTodos);
-}
-
-function filterOpen() {
-  const openTodos = state.todos.filter((todo) => todo.done === false);
-  renderElements(openTodos);
-}
-
-function filterAll() {
-  renderElements();
-}
 
 // remove function
 function removeTodos(e) {
   e.preventDefault();
-  const currentState = JSON.parse(localStorage.getItem("state"));
   const newArr = [];
-  currentState.todos.forEach((todo) => {
+  state.todos.forEach((todo) => {
     if (!todo.done) {
       newArr.push(todo);
     }
   });
   state.todos = newArr;
-  updateLocalStorage();
-  renderElements();
+  updateAndRender();
 }
 // Function to update local storage with the current state
 function updateLocalStorage() {
   localStorage.setItem("state", JSON.stringify(state));
 }
+// update & render function
+function updateAndRender() {
+  updateLocalStorage();
+  renderElements();
+}
 // EVENT LISTENER //
 btnAdd.addEventListener("click", addTodo);
 btnRemove.addEventListener("click", removeTodos);
-optionsDone.addEventListener("change", filterDone);
-optionsOpen.addEventListener("change", filterOpen);
-optionsAll.addEventListener("change", filterAll);
+optionsDone.addEventListener("change", () => {
+  state.filter = "done";
+  updateAndRender();
+});
+optionsOpen.addEventListener("change", () => {
+  state.filter = "open";
+  updateAndRender();
+});
+optionsAll.addEventListener("change", () => {
+  state.filter = "all";
+  updateAndRender();
+});

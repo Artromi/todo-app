@@ -43,3 +43,9 @@ li {
   font-size: 1.25rem;
   margin-top: 0.5rem;
 }
+ul > li > label {
+  padding-left: 0.5rem;
+}
+.linethrough {
+  text-decoration: line-through;
+}
